@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Estás Listo para Registrar tu Marca?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                <div class="flex justify-center mb-4">
+                    <div class="bg-blue-600 rounded-full p-4">
+                        <i data-lucide="shield-check" class="h-8 w-8 text-white"></i>
+                    </div>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">¿Estás Listo para Registrar tu Marca?</h1>
+                <p class="text-lg text-gray-600 mb-6">Descubre si tu emprendimiento está preparado para dar el siguiente paso legal con su marca</p>
+                
+                <div id="intro-section">
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <h3 class="font-semibold text-blue-900 mb-2">📋 ¿Qué vas a descubrir?</h3>
+                        <ul class="text-blue-800 text-sm space-y-1">
+                            <li>• Si tu marca tiene la fuerza legal necesaria</li>
+                            <li>• Qué aspectos debes fortalecer antes del registro</li>
+                            <li>• Tu nivel de preparación comercial y estratégica</li>
+                            <li>• Recomendaciones personalizadas según tu puntaje</li>
+                        </ul>
+                    </div>
+                    
+                    <button id="start-quiz" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                        🚀 Iniciar Quiz (10 preguntas)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="hidden">
+            <!-- Progress Bar -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-600">Progreso</span>
+                    <span class="text-sm font-medium text-gray-600"><span id="current-question">1</span>/10</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="mb-6">
+                    <h2 id="question-title" class="text-2xl font-bold text-gray-900 mb-4"></h2>
+                    <p id="question-subtitle" class="text-gray-600"></p>
+                </div>
+
+                <div id="options-container" class="space-y-4 mb-8">
+                    <!-- Options will be populated here -->
+                </div>
+
+                <div class="flex justify-between">
+                    <button id="prev-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-6 rounded-lg transition-colors hidden">
+                        ← Anterior
+                    </button>
+                    <button id="next-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors ml-auto" disabled>
+                        Siguiente →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-container" class="hidden">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <div id="result-icon" class="mx-auto mb-4">
+                        <!-- Icon will be set by JavaScript -->
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">¡Resultados Listos!</h2>
+                    <div class="text-6xl font-bold mb-4" id="final-score">0</div>
+                    <div class="text-xl text-gray-600">puntos de 100</div>
+                </div>
+
+                <div id="result-message" class="mb-8">
+                    <!-- Result message will be populated here -->
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">📊 Desglose de tu evaluación:</h3>
+                    <div id="score-breakdown" class="space-y-2">
+                        <!-- Score breakdown will be populated here -->
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button id="restart-quiz" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors mr-4">
+                        🔄 Repetir Quiz
+                    </button>
+                    <button id="contact-btn" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                        📞 Solicitar Asesoría
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form Modal -->
+        <div id="contact-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-8">
+                    <div class="text-center mb-6">
+                        <div class="bg-green-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                            <i data-lucide="calendar-check" class="h-8 w-8 text-green-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">¡Solicita tu Asesoría!</h3>
+                        <p class="text-gray-600">Déjanos tus datos y te contactaremos para una consulta personalizada sobre tu marca</p>
+                    </div>
+
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre completo *</label>
+                            <input
+                                type="text"
+                                id="contact-name"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="Tu nombre completo"
+                            />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                            <input
+                                type="email"
+                                id="contact-email"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="tu@email.com"
+                            />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono/WhatsApp *</label>
+                            <input
+                                type="tel"
+                                id="contact-phone"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="+57 300 123 4567"
+                            />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre de tu marca/empresa *</label>
+                            <input
+                                type="text"
+                                id="contact-brand"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="Nombre de tu marca"
+                            />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Cuéntanos sobre tu proyecto</label>
+                            <textarea
+                                id="contact-message"
+                                rows="3"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                placeholder="Describe brevemente tu negocio y qué asesoría necesitas..."
+                            ></textarea>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-medium text-gray-900 mb-2">📊 Resumen de tu evaluación:</h4>
+                            <div class="text-sm text-gray-600 space-y-1">
+                                <div class="flex justify-between">
+                                    <span>Puntaje obtenido:</span>
+                                    <span class="font-medium" id="modal-score">0/100</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Nivel de preparación:</span>
+                                    <span class="font-medium" id="modal-level">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-medium text-blue-900 mb-2">📞 ¿Cómo prefieres que te contactemos?</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="radio" name="contact-method" value="whatsapp" class="mr-2" checked>
+                                    <span class="text-sm text-blue-800">💬 WhatsApp (respuesta inmediata)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="contact-method" value="email" class="mr-2">
+                                    <span class="text-sm text-blue-800">📧 Email (respuesta en 24h)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3 pt-4">
+                            <button
+                                type="button"
+                                id="close-modal"
+                                class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="submit"
+                                id="submit-contact"
+                                class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                            >
+                                <span id="submit-text">💬 Enviar por WhatsApp</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="success-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl shadow-xl max-w-md w-full">
+                <div class="p-8 text-center">
+                    <div class="bg-green-100 rounded-full p-4 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <i data-lucide="check-circle" class="h-10 w-10 text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">¡Solicitud Enviada!</h3>
+                    <p class="text-gray-600 mb-6" id="success-message">Gracias por tu interés. Nos pondremos en contacto contigo dentro de las próximas 24 horas para coordinar tu asesoría personalizada.</p>
+                    
+                    <div class="bg-blue-50 rounded-lg p-4 mb-6" id="next-steps">
+                        <p class="text-blue-800 text-sm">
+                            <strong>Mientras tanto:</strong><br>
+                            • Revisa tu email (incluyendo spam)<br>
+                            • Mantén tu teléfono disponible<br>
+                            • Prepara información sobre tu marca
+                        </p>
+                    </div>
+                    
+                    <button
+                        id="close-success"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                    >
+                        Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data
+        const quizData = [
+            {
+                question: "¿Hace cuánto tiempo estás usando tu marca comercialmente?",
+                subtitle: "El uso previo fortalece tu derecho sobre la marca",
+                options: [
+                    { text: "Más de 6 meses con ventas constantes y registros contables", points: 10, category: "Uso Previo" },
+                    { text: "Entre 3-6 meses con algunas ventas documentadas", points: 7, category: "Uso Previo" },
+                    { text: "Menos de 3 meses, pero ya tengo clientes", points: 4, category: "Uso Previo" },
+                    { text: "Aún no he empezado a vender, solo tengo la idea", points: 0, category: "Uso Previo" }
+                ]
+            },
+            {
+                question: "¿Qué tan distintiva y original es tu marca?",
+                subtitle: "La distintividad es clave para que sea registrable",
+                options: [
+                    { text: "Es completamente inventada o muy creativa, no describe mi producto/servicio", points: 10, category: "Distintividad" },
+                    { text: "Combina palabras conocidas de forma original y memorable", points: 7, category: "Distintividad" },
+                    { text: "Usa palabras comunes pero con un toque distintivo", points: 4, category: "Distintividad" },
+                    { text: "Describe directamente lo que vendo (ej: 'Hamburguesas Ricas')", points: 0, category: "Distintividad" }
+                ]
+            },
+            {
+                question: "¿Has investigado si ya existe una marca similar a la tuya?",
+                subtitle: "Los antecedentes son fundamentales para evitar conflictos legales",
+                options: [
+                    { text: "Sí, contraté una búsqueda profesional de antecedentes", points: 10, category: "Antecedentes" },
+                    { text: "Busqué en Google, redes sociales y páginas de la SIC", points: 7, category: "Antecedentes" },
+                    { text: "Solo revisé rápidamente en Google y redes sociales", points: 4, category: "Antecedentes" },
+                    { text: "No he investigado, asumo que está disponible", points: 0, category: "Antecedentes" }
+                ]
+            },
+            {
+                question: "¿Cuál es tu situación actual en redes sociales?",
+                subtitle: "Las redes son importantes, pero no reemplazan el registro legal",
+                options: [
+                    { text: "Tengo todas las redes + entiendo que necesito registro legal para protección real", points: 10, category: "Redes vs Legal" },
+                    { text: "Tengo redes principales, pero sé que debo registrar legalmente mi marca", points: 7, category: "Redes vs Legal" },
+                    { text: "Solo tengo algunas redes, pero creo que eso es suficiente protección", points: 4, category: "Redes vs Legal" },
+                    { text: "No tengo redes o pienso que con tenerlas ya está protegida mi marca", points: 0, category: "Redes vs Legal" }
+                ]
+            },
+            {
+                question: "¿Tienes definida la identidad visual de tu marca?",
+                subtitle: "Un diseño consistente refuerza el valor de tu marca",
+                options: [
+                    { text: "Tengo logo profesional, manual de marca y aplicaciones definidas", points: 10, category: "Identidad Visual" },
+                    { text: "Tengo logo profesional y algunas piezas gráficas consistentes", points: 7, category: "Identidad Visual" },
+                    { text: "Tengo logo básico pero sin mucha consistencia visual", points: 4, category: "Identidad Visual" },
+                    { text: "No tengo logo o uso diseños muy básicos/inconsistentes", points: 0, category: "Identidad Visual" }
+                ]
+            },
+            {
+                question: "¿Qué tan claro tienes tu mercado objetivo?",
+                subtitle: "Conocer tu cliente ideal te ayuda a enfocar la protección de tu marca",
+                options: [
+                    { text: "Tengo definido mi cliente ideal, segmento y propuesta de valor única", points: 10, category: "Posicionamiento" },
+                    { text: "Conozco bien a mi cliente objetivo y mi diferenciación", points: 7, category: "Posicionamiento" },
+                    { text: "Tengo una idea general de quién es mi cliente", points: 4, category: "Posicionamiento" },
+                    { text: "Aún no tengo claro quién es mi cliente ideal", points: 0, category: "Posicionamiento" }
+                ]
+            },
+            {
+                question: "¿Qué sabes del proceso de registro ante la SIC?",
+                subtitle: "Conocer el proceso te ayuda a tomar mejores decisiones",
+                options: [
+                    { text: "Conozco el proceso, tiempos, costos y requisitos específicos", points: 10, category: "Conocimiento SIC" },
+                    { text: "Tengo conocimiento básico del proceso y costos aproximados", points: 7, category: "Conocimiento SIC" },
+                    { text: "Sé que existe la SIC pero no conozco bien el proceso", points: 4, category: "Conocimiento SIC" },
+                    { text: "No sé qué es la SIC ni cómo funciona el registro", points: 0, category: "Conocimiento SIC" }
+                ]
+            },
+            {
+                question: "¿Cuáles son tus planes de crecimiento?",
+                subtitle: "La estrategia de expansión define el alcance de protección que necesitas",
+                options: [
+                    { text: "Tengo plan de expansión claro: otras ciudades/países en 2-3 años", points: 10, category: "Expansión" },
+                    { text: "Quiero crecer a nivel nacional en los próximos años", points: 7, category: "Expansión" },
+                    { text: "Por ahora solo quiero consolidarme localmente", points: 4, category: "Expansión" },
+                    { text: "No tengo planes de crecimiento definidos", points: 0, category: "Expansión" }
+                ]
+            },
+            {
+                question: "¿Qué tan vulnerable es tu marca a ser copiada?",
+                subtitle: "El riesgo de imitación determina la urgencia del registro",
+                options: [
+                    { text: "Mi marca es muy visible y exitosa, el riesgo de copia es alto", points: 10, category: "Riesgo Copia" },
+                    { text: "Tengo competencia y mi marca empieza a ser reconocida", points: 7, category: "Riesgo Copia" },
+                    { text: "Hay poca competencia pero mi marca tiene potencial", points: 4, category: "Riesgo Copia" },
+                    { text: "No veo riesgo de que alguien copie mi marca", points: 0, category: "Riesgo Copia" }
+                ]
+            },
+            {
+                question: "¿Cuál es tu capacidad de inversión para el registro?",
+                subtitle: "El registro requiere inversión inicial y posible acompañamiento legal",
+                options: [
+                    { text: "Tengo presupuesto para registro + asesoría legal profesional", points: 10, category: "Inversión" },
+                    { text: "Puedo costear el registro y asesoría básica", points: 7, category: "Inversión" },
+                    { text: "Solo tengo para el costo básico del registro en SIC", points: 4, category: "Inversión" },
+                    { text: "No tengo presupuesto disponible para el registro", points: 0, category: "Inversión" }
+                ]
+            }
+        ];
+
+        // Quiz state
+        let currentQuestion = 0;
+        let answers = [];
+        let totalScore = 0;
+
+        // DOM elements
+        const introSection = document.getElementById('intro-section');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultsContainer = document.getElementById('results-container');
+        const startBtn = document.getElementById('start-quiz');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-quiz');
+        const contactBtn = document.getElementById('contact-btn');
+
+        // Initialize Lucide icons
+        function initLucideIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Start quiz
+        function startQuiz() {
+            introSection.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = quizData[currentQuestion];
+            
+            document.getElementById('question-title').textContent = question.question;
+            document.getElementById('question-subtitle').textContent = question.subtitle;
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            
+            // Update progress bar
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            
+            // Show options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option-item';
+                optionDiv.innerHTML = `
+                    <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 transition-colors">
+                        <input type="radio" name="question-${currentQuestion}" value="${index}" class="sr-only">
+                        <div class="option-radio w-4 h-4 border-2 border-gray-300 rounded-full mr-4 flex-shrink-0"></div>
+                        <span class="text-gray-700">${option.text}</span>
+                    </label>
+                `;
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Add click handlers
+            const radioInputs = optionsContainer.querySelectorAll('input[type="radio"]');
+            radioInputs.forEach(input => {
+                input.addEventListener('change', handleOptionSelect);
+            });
+            
+            // Update button states
+            prevBtn.classList.toggle('hidden', currentQuestion === 0);
+            
+            // Check if there's a saved answer
+            if (answers[currentQuestion] !== undefined) {
+                const savedInput = optionsContainer.querySelector(`input[value="${answers[currentQuestion]}"]`);
+                if (savedInput) {
+                    savedInput.checked = true;
+                    updateOptionStyles();
+                    nextBtn.disabled = false;
+                }
+            } else {
+                nextBtn.disabled = true;
+            }
+        }
+
+        // Handle option selection
+        function handleOptionSelect(e) {
+            const selectedValue = parseInt(e.target.value);
+            answers[currentQuestion] = selectedValue;
+            
+            updateOptionStyles();
+            nextBtn.disabled = false;
+            
+            // Auto-advance after a short delay
+            setTimeout(() => {
+                if (currentQuestion < quizData.length - 1) {
+                    nextQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }, 300);
+        }
+
+        // Update option visual styles
+        function updateOptionStyles() {
+            const labels = document.querySelectorAll('.option-item label');
+            labels.forEach((label, index) => {
+                const radio = label.querySelector('input');
+                const radioDiv = label.querySelector('.option-radio');
+                
+                if (radio.checked) {
+                    label.classList.add('border-blue-500', 'bg-blue-50');
+                    radioDiv.classList.add('bg-blue-500', 'border-blue-500');
+                    radioDiv.innerHTML = '<div class="w-2 h-2 bg-white rounded-full mx-auto mt-0.5"></div>';
+                } else {
+                    label.classList.remove('border-blue-500', 'bg-blue-50');
+                    radioDiv.classList.remove('bg-blue-500', 'border-blue-500');
+                    radioDiv.innerHTML = '';
+                }
+            });
+        }
+
+        // Navigation functions
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        // Calculate and show results
+        function finishQuiz() {
+            // Calculate total score
+            totalScore = 0;
+            const categoryScores = {};
+            
+            answers.forEach((answerIndex, questionIndex) => {
+                const question = quizData[questionIndex];
+                const selectedOption = question.options[answerIndex];
+                totalScore += selectedOption.points;
+                
+                if (!categoryScores[selectedOption.category]) {
+                    categoryScores[selectedOption.category] = 0;
+                }
+                categoryScores[selectedOption.category] += selectedOption.points;
+            });
+            
+            // Show results
+            showResults(categoryScores);
+        }
+
+        // Show results screen
+        function showResults(categoryScores) {
+            quizContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            
+            // Display score
+            document.getElementById('final-score').textContent = totalScore;
+            
+            // Determine result level and message
+            let resultMessage, resultIcon, iconClass;
+            
+            if (totalScore >= 80) {
+                resultMessage = `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h3 class="text-green-800 font-bold text-xl mb-3">🎉 ¡Estás listo para registrar tu marca!</h3>
+                        <p class="text-green-700 mb-4">Felicitaciones! Tu emprendimiento muestra una excelente preparación tanto comercial como estratégica. Tienes los elementos fundamentales para proceder con el registro.</p>
+                        <p class="text-green-700"><strong>Recomendación:</strong> Solo asegúrate de acompañarte de un profesional para no cometer errores en el proceso y maximizar la protección de tu marca.</p>
+                    </div>
+                `;
+                resultIcon = '<div class="bg-green-500 rounded-full p-6"><i data-lucide="check-circle" class="h-12 w-12 text-white"></i></div>';
+            } else if (totalScore >= 50) {
+                resultMessage = `
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                        <h3 class="text-yellow-800 font-bold text-xl mb-3">⚠️ Estás en buen camino</h3>
+                        <p class="text-yellow-700 mb-4">Tu marca tiene una base sólida, pero aún hay aspectos clave que debes fortalecer antes de proceder con el registro. No te preocupes, estás más cerca de lo que piensas.</p>
+                        <p class="text-yellow-700"><strong>Recomendación:</strong> Te conviene una asesoría personalizada para identificar qué fortalecer y crear un plan de acción antes del registro.</p>
+                    </div>
+                `;
+                resultIcon = '<div class="bg-yellow-500 rounded-full p-6"><i data-lucide="alert-triangle" class="h-12 w-12 text-white"></i></div>';
+            } else {
+                resultMessage = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                        <h3 class="text-red-800 font-bold text-xl mb-3">🚧 Aún no estás listo</h3>
+                        <p class="text-red-700 mb-4">Tu emprendimiento necesita más desarrollo antes de proceder con el registro de marca. Es importante revisar la viabilidad jurídica y comercial para asegurar el éxito.</p>
+                        <p class="text-red-700"><strong>Recomendación:</strong> Enfócate primero en fortalecer tu modelo de negocio y luego evalúa nuevamente el registro de tu marca.</p>
+                    </div>
+                `;
+                resultIcon = '<div class="bg-red-500 rounded-full p-6"><i data-lucide="x-circle" class="h-12 w-12 text-white"></i></div>';
+            }
+            
+            document.getElementById('result-icon').innerHTML = resultIcon;
+            document.getElementById('result-message').innerHTML = resultMessage;
+            
+            // Show score breakdown
+            const breakdownContainer = document.getElementById('score-breakdown');
+            breakdownContainer.innerHTML = '';
+            
+            Object.entries(categoryScores).forEach(([category, score]) => {
+                const maxScore = 10; // Each category has max 10 points
+                const percentage = (score / maxScore) * 100;
+                
+                const breakdownItem = document.createElement('div');
+                breakdownItem.className = 'flex items-center justify-between';
+                breakdownItem.innerHTML = `
+                    <span class="text-sm text-gray-600">${category}:</span>
+                    <div class="flex items-center">
+                        <div class="w-20 bg-gray-200 rounded-full h-2 mr-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="text-sm font-medium">${score}/10</span>
+                    </div>
+                `;
+                breakdownContainer.appendChild(breakdownItem);
+            });
+            
+            initLucideIcons();
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            totalScore = 0;
+            
+            resultsContainer.classList.add('hidden');
+            introSection.classList.remove('hidden');
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextQuestion);
+        prevBtn.addEventListener('click', prevQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+        
+        contactBtn.addEventListener('click', () => {
+            showContactModal();
+        });
+
+        // Show contact modal
+        function showContactModal() {
+            // Populate modal with quiz results
+            document.getElementById('modal-score').textContent = `${totalScore}/100`;
+            
+            let level;
+            if (totalScore >= 80) level = "Alto - Listo para registrar";
+            else if (totalScore >= 50) level = "Medio - Necesita fortalecer";
+            else level = "Bajo - Requiere desarrollo";
+            
+            document.getElementById('modal-level').textContent = level;
+            
+            // Show modal
+            document.getElementById('contact-modal').classList.remove('hidden');
+            
+            // Add event listeners for contact method change
+            const contactMethodInputs = document.querySelectorAll('input[name="contact-method"]');
+            contactMethodInputs.forEach(input => {
+                input.addEventListener('change', updateSubmitButton);
+            });
+            
+            // Initial button text
+            updateSubmitButton();
+            
+            initLucideIcons();
+        }
+
+        // Update submit button text based on selected contact method
+        function updateSubmitButton() {
+            const contactMethod = document.querySelector('input[name="contact-method"]:checked').value;
+            const submitText = document.getElementById('submit-text');
+            
+            if (contactMethod === 'whatsapp') {
+                submitText.textContent = '💬 Enviar por WhatsApp';
+            } else {
+                submitText.textContent = '📧 Enviar por Email';
+            }
+        }
+
+        // Close contact modal
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            clearContactForm();
+        }
+
+        // Clear contact form
+        function clearContactForm() {
+            document.getElementById('contact-form').reset();
+        }
+
+        // Handle contact form submission
+        function handleContactSubmission(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                phone: document.getElementById('contact-phone').value,
+                brand: document.getElementById('contact-brand').value,
+                message: document.getElementById('contact-message').value,
+                score: totalScore,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Get selected contact method
+            const contactMethod = document.querySelector('input[name="contact-method"]:checked').value;
+            
+            // Store contact method for success modal
+            window.selectedContactMethod = contactMethod;
+            
+            if (contactMethod === 'whatsapp') {
+                sendWhatsAppMessage(formData);
+            } else {
+                sendEmailMessage(formData);
+            }
+            
+            // Close contact modal and show success modal
+            closeContactModal();
+            showSuccessModal();
+        }
+
+        // Send WhatsApp message
+        function sendWhatsAppMessage(data) {
+            let levelText, urgencyText;
+            
+            if (data.score >= 80) {
+                levelText = "🟢 ALTO - Listo para registrar";
+                urgencyText = "¡Prioridad! Cliente listo para proceder";
+            } else if (data.score >= 50) {
+                levelText = "🟡 MEDIO - Necesita fortalecer aspectos";
+                urgencyText = "Oportunidad de asesoría y acompañamiento";
+            } else {
+                levelText = "🔴 BAJO - Requiere desarrollo previo";
+                urgencyText = "Necesita asesoría estratégica integral";
+            }
+
+            const message = `🎯 *NUEVA SOLICITUD DE ASESORÍA MARCARIA*
+
+👤 *DATOS DEL CLIENTE:*
+• Nombre: ${data.name}
+• Email: ${data.email}
+• Teléfono: ${data.phone}
+• Marca/Empresa: ${data.brand}
+
+📊 *EVALUACIÓN QUIZ:*
+• Puntaje: ${data.score}/100 puntos
+• Nivel: ${levelText}
+• ${urgencyText}
+
+💬 *MENSAJE DEL CLIENTE:*
+${data.message || 'No dejó mensaje adicional'}
+
+📅 *Fecha solicitud:* ${new Date().toLocaleDateString('es-CO')}
+
+---
+*Generado automáticamente por Quiz de Evaluación Marcaria*`;
+
+            const phoneNumber = '573246341510'; // Tu WhatsApp Business
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Abrir WhatsApp en nueva ventana
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Send email message  
+        function sendEmailMessage(data) {
+            let levelText, urgencyText, colorClass;
+            
+            if (data.score >= 80) {
+                levelText = "ALTO - Listo para registrar";
+                urgencyText = "¡PRIORIDAD! Cliente listo para proceder";
+                colorClass = "green";
+            } else if (data.score >= 50) {
+                levelText = "MEDIO - Necesita fortalecer aspectos";
+                urgencyText = "Oportunidad de asesoría y acompañamiento";
+                colorClass = "orange";
+            } else {
+                levelText = "BAJO - Requiere desarrollo previo";
+                urgencyText = "Necesita asesoría estratégica integral";
+                colorClass = "red";
+            }
+
+            // Crear mailto con información estructurada
+            const subject = `🎯 Nueva Solicitud: ${data.name} - ${data.brand} (${data.score}/100 pts)`;
+            
+            const emailBody = `NUEVA SOLICITUD DE ASESORÍA MARCARIA
+
+=== DATOS DEL CLIENTE ===
+Nombre: ${data.name}
+Email: ${data.email}
+Teléfono: ${data.phone}
+Marca/Empresa: ${data.brand}
+
+=== EVALUACIÓN QUIZ ===
+Puntaje: ${data.score}/100 puntos
+Nivel de preparación: ${levelText}
+Análisis: ${urgencyText}
+
+=== MENSAJE DEL CLIENTE ===
+${data.message || 'No dejó mensaje adicional'}
+
+=== INFORMACIÓN ADICIONAL ===
+Fecha de solicitud: ${new Date().toLocaleDateString('es-CO')} a las ${new Date().toLocaleTimeString('es-CO')}
+IP/Timestamp: ${data.timestamp}
+
+---
+Generado automáticamente por Quiz de Evaluación Marcaria
+Responder a: ${data.email}`;
+
+            const mailtoUrl = `mailto:ljaramillo@linajaramillo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Abrir cliente de email
+            window.location.href = mailtoUrl;
+        }
+
+        // Show success modal
+        function showSuccessModal() {
+            const contactMethod = window.selectedContactMethod || 'whatsapp';
+            
+            const successMessage = document.getElementById('success-message');
+            const nextSteps = document.getElementById('next-steps');
+            
+            if (contactMethod === 'whatsapp') {
+                successMessage.innerHTML = `¡Perfecto! Se ha abierto WhatsApp con todos tus datos. <strong>Lina Jaramillo</strong> recibirá tu solicitud inmediatamente y te responderá lo antes posible.`;
+                nextSteps.innerHTML = `
+                    <p class="text-blue-800 text-sm">
+                        <strong>📱 Tu solicitud vía WhatsApp:</strong><br>
+                        • Se envió a: +57 324 634 1510<br>
+                        • Incluye toda tu información del quiz<br>
+                        • Respuesta típica: dentro de 2-4 horas<br>
+                        • Si no se abrió WhatsApp, <a href="https://wa.me/573246341510" target="_blank" class="underline">haz clic aquí</a>
+                    </p>
+                `;
+            } else {
+                successMessage.innerHTML = `¡Excelente! Se ha abierto tu cliente de email con toda la información lista para enviar a <strong>ljaramillo@linajaramillo.com</strong>`;
+                nextSteps.innerHTML = `
+                    <p class="text-blue-800 text-sm">
+                        <strong>📧 Tu solicitud vía Email:</strong><br>
+                        • Destinatario: ljaramillo@linajaramillo.com<br>
+                        • Incluye toda tu evaluación del quiz<br>
+                        • Respuesta dentro de 24 horas<br>
+                        • Revisa tu bandeja de entrada y spam
+                    </p>
+                `;
+            }
+            
+            document.getElementById('success-modal').classList.remove('hidden');
+            initLucideIcons();
+        }
+
+        // Close success modal
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        // Additional event listeners
+        document.getElementById('close-modal').addEventListener('click', closeContactModal);
+        document.getElementById('contact-form').addEventListener('submit', handleContactSubmission);
+        document.getElementById('close-success').addEventListener('click', closeSuccessModal);
+
+        // Close modals when clicking outside
+        document.getElementById('contact-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'contact-modal') {
+                closeContactModal();
+            }
+        });
+
+        document.getElementById('success-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'success-modal') {
+                closeSuccessModal();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initLucideIcons();
+        });
+    </script>
+</body>
+</html>
