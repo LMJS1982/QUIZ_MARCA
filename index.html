@@ -528,30 +528,30 @@
             if (totalScore >= 80) {
                 resultMessage = `
                     <div class="bg-green-50 border border-green-200 rounded-lg p-6">
-                        <h3 class="text-green-800 font-bold text-xl mb-3">🎉 ¡Estás listo para registrar tu marca!</h3>
-                        <p class="text-green-700 mb-4">Felicitaciones! Tu emprendimiento muestra una excelente preparación tanto comercial como estratégica. Tienes los elementos fundamentales para proceder con el registro.</p>
-                        <p class="text-green-700"><strong>Recomendación:</strong> Solo asegúrate de acompañarte de un profesional para no cometer errores en el proceso y maximizar la protección de tu marca.</p>
+                        <h3 class="text-green-800 font-bold text-xl mb-3">🎉 ¡Excelente! Tu marca está muy bien posicionada</h3>
+                        <p class="text-green-700 mb-4">Felicitaciones! Tu emprendimiento muestra una excelente preparación tanto comercial como estratégica. Tienes los elementos fundamentales para proceder con el registro inmediatamente.</p>
+                        <p class="text-green-700"><strong>Siguiente paso:</strong> Procede con confianza al registro, acompañándote de un profesional para maximizar la protección y evitar cualquier error en el proceso.</p>
                     </div>
                 `;
                 resultIcon = '<div class="bg-green-500 rounded-full p-6"><i data-lucide="check-circle" class="h-12 w-12 text-white"></i></div>';
             } else if (totalScore >= 50) {
                 resultMessage = `
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                        <h3 class="text-yellow-800 font-bold text-xl mb-3">⚠️ Estás en buen camino</h3>
-                        <p class="text-yellow-700 mb-4">Tu marca tiene una base sólida, pero aún hay aspectos clave que debes fortalecer antes de proceder con el registro. No te preocupes, estás más cerca de lo que piensas.</p>
-                        <p class="text-yellow-700"><strong>Recomendación:</strong> Te conviene una asesoría personalizada para identificar qué fortalecer y crear un plan de acción antes del registro.</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="text-blue-800 font-bold text-xl mb-3">💪 ¡Tu marca tiene gran potencial!</h3>
+                        <p class="text-blue-700 mb-4">Tu marca tiene una base sólida y está en el momento perfecto para protegerla legalmente. Algunos aspectos pueden optimizarse durante el proceso de registro para fortalecer aún más tu posición.</p>
+                        <p class="text-blue-700"><strong>Siguiente paso:</strong> Una asesoría personalizada te ayudará a identificar las mejores estrategias y proceder con el registro de forma estratégica.</p>
                     </div>
                 `;
-                resultIcon = '<div class="bg-yellow-500 rounded-full p-6"><i data-lucide="alert-triangle" class="h-12 w-12 text-white"></i></div>';
+                resultIcon = '<div class="bg-blue-500 rounded-full p-6"><i data-lucide="trending-up" class="h-12 w-12 text-white"></i></div>';
             } else {
                 resultMessage = `
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
-                        <h3 class="text-red-800 font-bold text-xl mb-3">🚧 Aún no estás listo</h3>
-                        <p class="text-red-700 mb-4">Tu emprendimiento necesita más desarrollo antes de proceder con el registro de marca. Es importante revisar la viabilidad jurídica y comercial para asegurar el éxito.</p>
-                        <p class="text-red-700"><strong>Recomendación:</strong> Enfócate primero en fortalecer tu modelo de negocio y luego evalúa nuevamente el registro de tu marca.</p>
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                        <h3 class="text-purple-800 font-bold text-xl mb-3">🚀 ¡Es el momento perfecto para empezar!</h3>
+                        <p class="text-purple-700 mb-4">Tu marca está en una etapa inicial ideal para establecer las bases legales correctas desde el principio. Registrar ahora te dará ventaja competitiva y te ahorrará problemas futuros.</p>
+                        <p class="text-purple-700"><strong>Siguiente paso:</strong> Una asesoría integral te guiará para desarrollar la estrategia marcaria perfecta y proceder con el registro desde una posición sólida.</p>
                     </div>
                 `;
-                resultIcon = '<div class="bg-red-500 rounded-full p-6"><i data-lucide="x-circle" class="h-12 w-12 text-white"></i></div>';
+                resultIcon = '<div class="bg-purple-500 rounded-full p-6"><i data-lucide="rocket" class="h-12 w-12 text-white"></i></div>';
             }
             
             document.getElementById('result-icon').innerHTML = resultIcon;
@@ -608,9 +608,9 @@
             document.getElementById('modal-score').textContent = `${totalScore}/100`;
             
             let level;
-            if (totalScore >= 80) level = "Alto - Listo para registrar";
-            else if (totalScore >= 50) level = "Medio - Necesita fortalecer";
-            else level = "Bajo - Requiere desarrollo";
+            if (totalScore >= 80) level = "Alto - Muy bien preparado";
+            else if (totalScore >= 50) level = "Medio - Gran potencial";
+            else level = "Inicial - Momento perfecto para empezar";
             
             document.getElementById('modal-level').textContent = level;
             
@@ -689,14 +689,14 @@
             let levelText, urgencyText;
             
             if (data.score >= 80) {
-                levelText = "🟢 ALTO - Listo para registrar";
-                urgencyText = "¡Prioridad! Cliente listo para proceder";
+                levelText = "🟢 ALTO - Muy bien preparado";
+                urgencyText = "¡Excelente! Cliente listo para proceder";
             } else if (data.score >= 50) {
-                levelText = "🟡 MEDIO - Necesita fortalecer aspectos";
-                urgencyText = "Oportunidad de asesoría y acompañamiento";
+                levelText = "🔵 MEDIO - Gran potencial";
+                urgencyText = "Oportunidad de asesoría estratégica";
             } else {
-                levelText = "🔴 BAJO - Requiere desarrollo previo";
-                urgencyText = "Necesita asesoría estratégica integral";
+                levelText = "🟣 INICIAL - Momento perfecto para empezar";
+                urgencyText = "Cliente ideal para asesoría integral";
             }
 
             const message = `🎯 *NUEVA SOLICITUD DE ASESORÍA MARCARIA*
@@ -732,17 +732,17 @@ ${data.message || 'No dejó mensaje adicional'}
             let levelText, urgencyText, colorClass;
             
             if (data.score >= 80) {
-                levelText = "ALTO - Listo para registrar";
-                urgencyText = "¡PRIORIDAD! Cliente listo para proceder";
+                levelText = "ALTO - Muy bien preparado";
+                urgencyText = "¡EXCELENTE! Cliente listo para proceder";
                 colorClass = "green";
             } else if (data.score >= 50) {
-                levelText = "MEDIO - Necesita fortalecer aspectos";
-                urgencyText = "Oportunidad de asesoría y acompañamiento";
-                colorClass = "orange";
+                levelText = "MEDIO - Gran potencial";
+                urgencyText = "Oportunidad de asesoría estratégica";
+                colorClass = "blue";
             } else {
-                levelText = "BAJO - Requiere desarrollo previo";
-                urgencyText = "Necesita asesoría estratégica integral";
-                colorClass = "red";
+                levelText = "INICIAL - Momento perfecto para empezar";
+                urgencyText = "Cliente ideal para asesoría integral";
+                colorClass = "purple";
             }
 
             // Crear mailto con información estructurada
